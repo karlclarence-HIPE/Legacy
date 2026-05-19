@@ -1,0 +1,30 @@
+<Solution>
+  <Folder Name="/src/" />
+  <Folder Name="/src/Authentication/">
+    <File Path="module-settings.json" />
+    <Project Path="src/Authentication/Legacy.Authentication.Api/Legacy.Authentication.Api.csproj" />
+    <Project Path="src/Authentication/Legacy.Authentication.Application/Legacy.Authentication.Application.csproj" />
+    <Project Path="src/Authentication/Legacy.Authentication.Contracts/Legacy.Authentication.Contracts.csproj" />
+  </Folder>
+  <Folder Name="/src/Profile/">
+    <Project Path="src/Profile/Legacy.Profile.Api/Legacy.Profile.Api.csproj" Id="6175d1b3-ce97-47f6-85b3-48839ea6a3da" />
+    <Project Path="src/Profile/Legacy.Profile.Application/Legacy.Profile.Application.csproj" Id="a0400c1c-5410-47d7-ae62-44aff7e4634b" />
+    <Project Path="src/Profile/Legacy.Profile.Contracts/Legacy.Profile.Contracts.csproj" Id="b8fe009b-f703-4423-9a5e-188787aaed89" />
+  </Folder>
+  <Folder Name="/src/Security/" />
+  <Folder Name="/src/Security/Authorization/">
+    <Project Path="src/Security/Authorization/Legacy.Security.Authorization/Legacy.Security.Authorization.csproj" Id="1d7ee786-7659-4b80-90de-4bbecb4c3a7c" />
+  </Folder>
+  <Folder Name="/src/Security/UserGroup/">
+    <Project Path="src/Security/UserGroup/Legacy.Security.UserGroup.Application/Legacy.Security.UserGroup.Application.csproj" Id="aaa01e9c-3045-4e08-a4cf-be64c9113a0b" />
+    <Project Path="src/Security/UserGroup/Legacy.Security.UserGroup.Shared/Legacy.Security.UserGroup.Shared.csproj" Id="fd33c4f5-51db-4103-aa47-bf1873f5719f" />
+  </Folder>
+  <Folder Name="/src/Shared/">
+    <Project Path="src/Shared/Legacy.Framework.FileManager/Legacy.Framework.FileManager.csproj" Id="8fe65429-d811-4119-9dbb-19ce1a3bba6a" />
+    <Project Path="src/Shared/Legacy.Framework.Utility/Legacy.Framework.Utility.csproj" Id="56549396-4fd9-4d4f-a76e-97f58edc3318" />
+    <Project Path="src/Shared/Legacy.Shared/Legacy.Shared.csproj" Id="9637a8aa-0f7a-4d65-8fee-4e1aa65e2e38" />
+  </Folder>
+  <Folder Name="/src/WebHost/">
+    <Project Path="src/WebHost/Legacy.WebHost/Legacy.WebHost.csproj" Id="80ed45c6-3b91-4736-8587-2e00931f73b6" />
+  </Folder>
+</Solution>

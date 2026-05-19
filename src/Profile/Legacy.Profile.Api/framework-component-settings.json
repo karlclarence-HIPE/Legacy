@@ -1,0 +1,11 @@
+{
+  "FileManager": {
+    "DirectoryName": "Uploads",
+    "AcceptedExtensions": [ ".pdf", ".doc", ".docx", ".xlsx", ".ppt", ".jpg", ".jpeg", ".png" ],
+    "AcceptedImageExtensions": [ ".jpg", ".jpeg", ".png" ],
+    "MaxFileSize": "25"
+  },
+  "Utility": {
+    "ConnectionString": "Host=localhost;Port=5432;Database=legacy;Username=postgres;Password=postgres"
+  }
+}

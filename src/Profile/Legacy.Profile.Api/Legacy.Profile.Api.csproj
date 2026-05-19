@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.6" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="10.1.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Security\UserGroup\Legacy.Security.UserGroup.Shared\Legacy.Security.UserGroup.Shared.csproj" />
+    <ProjectReference Include="..\..\Shared\Legacy.Framework.FileManager\Legacy.Framework.FileManager.csproj" />
+    <ProjectReference Include="..\..\Shared\Legacy.Framework.Utility\Legacy.Framework.Utility.csproj" />
+    <ProjectReference Include="..\..\Shared\Legacy.Shared\Legacy.Shared.csproj" />
+    <ProjectReference Include="..\Legacy.Profile.Application\Legacy.Profile.Application.csproj" />
+    <ProjectReference Include="..\Legacy.Profile.Contracts\Legacy.Profile.Contracts.csproj" />
+  </ItemGroup>
+
+</Project>
