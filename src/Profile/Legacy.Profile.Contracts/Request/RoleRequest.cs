@@ -2,7 +2,7 @@
 
 public abstract class RoleRequest
 {
-    public required int RoleId { get; init; }
+    public required int RoleId { get; set; }
 
-    public required string RoleName { get; init; }
+    public required string RoleName { get; set; } = string.Empty;
 }

@@ -1,19 +1,19 @@
-﻿using Legacy.Profile.Application.Configuration;
+﻿using Legacy.Role.Application.Configuration;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Options;
 using System.Data;
 
-namespace Legacy.Profile.Application.Database;
+namespace Legacy.Role.Application.Database;
 
-public interface IDbConnectionFactory
+public interface IDbConnectionFactory 
 {
-    Task<IDbConnection> CreateConnectionAsync(CancellationToken cancellationToken = default); 
+    Task<IDbConnection> CreateConnectionAsync(CancellationToken cancellationToken = default);
 }
 
 public class DbConnectionFactory : IDbConnectionFactory
 {
     private readonly string _connectionString;
-    
+
     public DbConnectionFactory(IOptionsMonitor<ModuleConfigurationOptions> configurations) =>
         _connectionString = configurations.CurrentValue.ConnectionString;
 
