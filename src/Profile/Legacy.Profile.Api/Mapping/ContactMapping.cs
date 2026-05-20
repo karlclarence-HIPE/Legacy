@@ -14,7 +14,6 @@ public static class ContactMapping
         new()
         { 
             Name = request.Name, 
-            UserId = request.UserId,
             Email = request.Email,
             Password = request.Password, 
             Role = request.Role.Map(), 
@@ -48,4 +47,15 @@ public static class ContactMapping
             RoleName = role.RoleName
         };
 
+    public static UpdateProfile Map(this UpdateProfileRequest request) =>
+        new()
+        { 
+            UserId = request.UserId, 
+            Name = request.Name, 
+            Email = request.Email, 
+            Password = request.Password, 
+            Role = request.Role.Map(), 
+            CreatedAt = request.CreatedAt, 
+            UpdatedAt = request.UpdatedAt
+        };
 }

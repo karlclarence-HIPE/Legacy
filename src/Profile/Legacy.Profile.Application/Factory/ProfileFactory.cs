@@ -52,7 +52,7 @@ public class ProfileFactory : IProfileFactory
     public Domain.Profile UpdateProfileAsync(UpdateProfile updateProfile)
     {
         var profile = Domain.Profile.Update(
-                updateProfile.Id, 
+                updateProfile.UserId, 
                 updateProfile.Name, 
                 updateProfile.Email, 
                 updateProfile.Password, 

@@ -4,7 +4,6 @@ using Legacy.Profile.Application.Services.Profile;
 using Legacy.Profile.Application.Services.Profile.Repository;
 using Legacy.Profile.Application.Common;
 using Legacy.Shared.Constants;
-using Legacy.Shared.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 using Legacy.Profile.Application.Factory;
 using Legacy.Shared.Provider;

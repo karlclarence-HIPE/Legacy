@@ -2,6 +2,6 @@
 
 public class UpdateProfile : BaseProfile
 {
-    public required int Id { get; set; }
+    public required int UserId { get; set; }
 
 }

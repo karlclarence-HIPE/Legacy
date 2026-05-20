@@ -8,6 +8,7 @@ using Legacy.Profile.Contracts.Response;
 using Legacy.Shared;
 using Microsoft.AspNetCore.Mvc;
 using Legacy.Profile.Api.Routing;
+using Legacy.Shared.Utility;
 
 namespace Legacy.Profile.Api.Controllers;
 
@@ -29,6 +30,24 @@ public class ProfileController : SystemController
 
         return result.Match<IActionResult>(Created, failure => Problem(failure.Errors));
     }
+
+    [HttpPost(ApiRoute.Update)]
+    [ProducesResponseType(typeof(UpdateProfileResponse), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> Update(UpdateProfileRequest request, CancellationToken cancellationToken)
+    {
+        var result = await _profileService.UpdateAsync(request.Map(), cancellationToken);
+
+        return result.Match<IActionResult>(Updated, 
+            failure => Problem(failure.Errors));
+    }
+    //[HttpGet(ApiRoute.GetAll)]
+    //[ProducesResponseType(typeof(GetAllResponse), StatusCodes.Status201Created)]
+    //[ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+    //public async Task<IActionResult> GetAll([FromQuery] GetAllRequest request, CancellationToken cancellationToken)
+    //{
+    //    var options = request.Map(); 
+    //}
 
     [HttpPost(ApiRoute.Get)]
     [ProducesResponseType(typeof(ProfileResponse), StatusCodes.Status200OK)]
@@ -52,6 +71,16 @@ public class ProfileController : SystemController
     }
 
     private ObjectResult Created(CreateProfileResult result)
+    {
+        var response = result.Profile.Map();
+
+        return CreatedAtAction(nameof(GetById), new
+        {
+            UserId = response.UserId,
+        }, response);
+    }
+
+    private ObjectResult Updated(UpdateProfileResult result)
     {
         var response = result.Profile.Map();
 

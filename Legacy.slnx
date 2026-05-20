@@ -11,6 +11,11 @@
     <Project Path="src/Profile/Legacy.Profile.Application/Legacy.Profile.Application.csproj" Id="a0400c1c-5410-47d7-ae62-44aff7e4634b" />
     <Project Path="src/Profile/Legacy.Profile.Contracts/Legacy.Profile.Contracts.csproj" Id="b8fe009b-f703-4423-9a5e-188787aaed89" />
   </Folder>
+  <Folder Name="/src/Role/">
+    <Project Path="src/Role/Legacy.Role.Api/Legacy.Role.Api.csproj" Id="b5f8d809-7495-470c-8c76-b5f18642107a" />
+    <Project Path="src/Role/Legacy.Role.Application/Legacy.Role.Application.csproj" Id="ef03dccb-78a4-4674-a0bc-0feda3e13c6c" />
+    <Project Path="src/Role/Legacy.Role.Contracts/Legacy.Role.Contracts.csproj" Id="7c4d9c69-bec4-494a-ac66-27c350811a92" />
+  </Folder>
   <Folder Name="/src/Security/" />
   <Folder Name="/src/Security/Authorization/">
     <Project Path="src/Security/Authorization/Legacy.Security.Authorization/Legacy.Security.Authorization.csproj" Id="1d7ee786-7659-4b80-90de-4bbecb4c3a7c" />
