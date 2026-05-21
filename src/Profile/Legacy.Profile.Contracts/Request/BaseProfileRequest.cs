@@ -10,7 +10,7 @@ public class BaseProfileRequest
 
     public required string Password { get; init; }
 
-    public required RoleRequest Role { get; set; } 
+    public required RoleRequest Role { get; init; } 
 
     public required DateTime CreatedAt { get; init; }
 

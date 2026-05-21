@@ -24,7 +24,7 @@ public class ProfileController : SystemController
     [HttpPost(ApiRoute.Create)]
     [ProducesResponseType(typeof(ProfileResponse), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> Create(ProfileRequest request, CancellationToken cancellationToken)
+    public async Task<IActionResult> Create([FromBody] ProfileRequest request, CancellationToken cancellationToken)
     {
         var result = await _profileService.CreateAsync(request.Map(), cancellationToken);
 
@@ -49,7 +49,7 @@ public class ProfileController : SystemController
     //    var options = request.Map(); 
     //}
 
-    [HttpPost(ApiRoute.Get)]
+    [HttpGet(ApiRoute.Get)]
     [ProducesResponseType(typeof(ProfileResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]

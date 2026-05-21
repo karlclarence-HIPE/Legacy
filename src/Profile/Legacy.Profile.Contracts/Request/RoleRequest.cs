@@ -1,8 +1,8 @@
 ﻿namespace Legacy.Profile.Contracts.Request;
 
-public abstract class RoleRequest
+public class RoleRequest
 {
-    public required int RoleId { get; set; }
+    public required int RoleId { get; init; }
 
-    public required string RoleName { get; set; } = string.Empty;
+    public required string RoleName { get; init; } = string.Empty;
 }

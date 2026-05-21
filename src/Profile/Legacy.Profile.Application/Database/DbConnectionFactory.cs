@@ -1,5 +1,5 @@
 ﻿using Legacy.Profile.Application.Configuration;
-using Microsoft.Data.SqlClient;
+using Npgsql;
 using Microsoft.Extensions.Options;
 using System.Data;
 
@@ -21,7 +21,7 @@ public class DbConnectionFactory : IDbConnectionFactory
 
     public async Task<IDbConnection> CreateConnectionAsync(CancellationToken cancellationToken = default)
     {
-        var connection = new SqlConnection(_connectionString);
+        var connection = new NpgsqlConnection(_connectionString);
         await connection.OpenAsync(cancellationToken);
 
         return connection;

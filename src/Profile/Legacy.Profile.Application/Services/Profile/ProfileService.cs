@@ -49,8 +49,10 @@ public class ProfileService : IProfileService
 
         var isCreated = await _profileRepository.CreateAsync(profile, cancellationToken);
 
-        if (isCreated) return CreateProfileFailureResult.Throw(ErrorCode.CreationError);
-
+        if (!isCreated)
+        {
+            return CreateProfileFailureResult.Throw(ErrorCode.CreationError);
+        }
         return CreateProfileResult.Success(profile);
     }
 

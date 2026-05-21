@@ -3,6 +3,6 @@
     "moduleKey": "PROF",
     "moduleCode": "PROF",
     "uploadDirectory": "profile", 
-    "connectionString":  "Host=localhost;Port=5432;Database=Legacy;Username=postgres;Password=postgres"
+    "connectionString":  "Host=localhost;Port=5432;Database=legacy;Username=postgres;Password=postgres"
   }
 }

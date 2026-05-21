@@ -27,8 +27,8 @@ public class ProfileRepository : IProfileRepository
                 """
                     INSERT INTO users
                         (name, email, password_hash, role_id, created_at)
-                    VALUES (@Name, @Email, @Password, @Role_Id, @CreatedAt)
-                    RETURNING id;
+                    VALUES (@Name, @Email, @Password, @Role_Id, CAST(@CreatedAt AS TIMESTAMP))
+                    RETURNING user_id;
                 """, new
                 {
                     Name = entity.Name, 

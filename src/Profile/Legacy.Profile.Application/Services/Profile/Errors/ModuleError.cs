@@ -27,8 +27,6 @@ public static class ModuleError
     [
         new Error(string.Empty, ErrorType.Validation, "Role Title is Required"), 
 
-        new Error(string.Empty, ErrorType.Unexpected, "No Error Message Found for this specific Error Code."), 
-
         new Error(ErrorCode.Internal, ErrorType.Unexpected, "Something went wrong during processing the request."),
         
         new Error(ErrorCode.CreationError, ErrorType.Validation, "An error occured during profile creation process."), 
