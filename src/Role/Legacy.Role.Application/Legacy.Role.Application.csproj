@@ -19,8 +19,4 @@
     <ProjectReference Include="..\..\Shared\Legacy.Shared\Legacy.Shared.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Services\Status\" />
-  </ItemGroup>
-
 </Project>

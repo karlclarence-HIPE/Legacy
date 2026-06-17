@@ -24,7 +24,7 @@ public class ProfileController : SystemController
     [HttpPost(ApiRoute.Create)]
     [ProducesResponseType(typeof(ProfileResponse), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> Create([FromBody] ProfileRequest request, CancellationToken cancellationToken)
+    public async Task<IActionResult> Create(ProfileRequest request, CancellationToken cancellationToken)
     {
         var result = await _profileService.CreateAsync(request.Map(), cancellationToken);
 

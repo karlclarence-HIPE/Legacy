@@ -1,0 +1,6 @@
+{
+  "Settings": {
+    "DatabaseName": "Legacy",
+    "ConnectionString": "Host=localhost;Port=5432;Database=legacy;Username=postgres;Password=postgres"
+  }
+}

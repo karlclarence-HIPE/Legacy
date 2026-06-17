@@ -20,9 +20,9 @@ public class ProfileStatusRepository : IProfileStatusRepository
 
         var result = await connection.QuerySingleOrDefaultAsync<ProfileStatusDataModel>(
             new CommandDefinition(
-                """SELECT user_id AS Id, Name FROM users WHERE Name LIKE @Status""",
-                new { Status = string.Concat('%', status, '%') }, cancellationToken: cancellationToken
-                )
+                    """SELECT user_id AS Id, Name FROM users WHERE Name LIKE @Status""",
+                    new { Status = string.Concat('%', status, '%') }, cancellationToken: cancellationToken
+                    )
             );
 
         return result;
