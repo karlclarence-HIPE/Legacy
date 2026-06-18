@@ -53,16 +53,16 @@ public class ProfileController : SystemController
     [ProducesResponseType(typeof(ProfileResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetById([FromRoute] string userId, CancellationToken cancellation)
+    public async Task<IActionResult> GetById([FromRoute] string userId, CancellationToken cancellationToken)
     {
-        var isValidUserId = userId == null;
+        var isValidUserId = int.TryParse(userId, out var convertedId);
 
         if (!isValidUserId) 
             return Problem(statusCode: StatusCodes.Status400BadRequest, 
                 title: GeneralFailureResult.Throw(ErrorCode.Filter));
 
         int id = Convert.ToInt32(userId);
-        var result = await _profileService.GetByIdAsync(id, cancellation);
+        var result = await _profileService.GetByIdAsync(id, cancellationToken);
 
         return result.Match<IActionResult>(
                 success => Ok(success.Map()), 
@@ -76,7 +76,7 @@ public class ProfileController : SystemController
 
         return CreatedAtAction(nameof(GetById), new
         {
-            UserId = response.UserId,
+            idOrGuid = response.UserId,
         }, response);
     }
 
@@ -86,7 +86,7 @@ public class ProfileController : SystemController
 
         return CreatedAtAction(nameof(GetById), new
         {
-            UserId = response.UserId,
+            idOrGuid = response.UserId,
         }, response);
     }
 }

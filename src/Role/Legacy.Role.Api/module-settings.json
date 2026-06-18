@@ -3,6 +3,6 @@
     "moduleKey": "ROLE",
     "moduleCode": "ROLE",
     "uploadDirectory": "role",
-    "connectionString": "Host=localhost;Port=5432;Database=legacy;Username=postgres;Password=postgres"
+    "connectionString": "Host=localhost;Port=5433;Database=Legacy;Username=postgres;Password=postgres"
   }
 }
