@@ -1,7 +1,6 @@
 <Solution>
   <Folder Name="/src/" />
   <Folder Name="/src/Authentication/">
-    <File Path="module-settings.json" />
     <Project Path="src/Authentication/Legacy.Authentication.Api/Legacy.Authentication.Api.csproj" />
     <Project Path="src/Authentication/Legacy.Authentication.Application/Legacy.Authentication.Application.csproj" />
     <Project Path="src/Authentication/Legacy.Authentication.Contracts/Legacy.Authentication.Contracts.csproj" />

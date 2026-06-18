@@ -1,0 +1,8 @@
+{
+  "Role": {
+    "moduleKey": "ROLE",
+    "moduleCode": "ROLE",
+    "uploadDirectory": "role",
+    "connectionString": "Host=localhost;Port=5432;Database=legacy;Username=postgres;Password=postgres"
+  }
+}
