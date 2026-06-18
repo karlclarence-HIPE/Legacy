@@ -1,9 +1,13 @@
 ﻿using Dapper;
+using Legacy.Shared.Options;
 using Legacy.Authentication.Application.Common;
 using Legacy.Profile.Application.Common.Data;
+using Legacy.Profile.Application.Common.Mapping;
 using Legacy.Profile.Application.Database;
 using Legacy.Shared.Format;
 using System.Data;
+using GetAllOptions = Legacy.Profile.Application.Common.Mapping.GetAllOptions;
+
 namespace Legacy.Profile.Application.Services.Profile.Repository;
 
 public class ProfileRepository : IProfileRepository
@@ -144,5 +148,67 @@ public class ProfileRepository : IProfileRepository
         }
     }
 
+    public async Task<int> GetRecordCountAsync(GetAllOptions options, CancellationToken cancellationToken)
+    {
+        using var connection = await _dbConnectionFactory.CreateConnectionAsync(cancellationToken);
+        var dateFilterClause = string.Empty;
 
+        var sql = $"""
+                    SELECT COUNT(DISTINCT a.ID)
+                    FROM tVacancy v 
+                      {dateFilterClause}  
+                    """;
+        var result = await connection.QuerySingleAsync(sql, cancellationToken);
+        return result;
+    }
+
+    public async Task<IDictionary<int, ProfileDataModel>> GetAllAsync(GetAllOptions options, CancellationToken cancellationToken = default)
+    {
+        using var connection = await _dbConnectionFactory.CreateConnectionAsync(cancellationToken);
+
+        var orderClause = "ORDER BY ID"; 
+
+        if (options.SortField is not null)
+        {
+            orderClause =
+                $"ORDER BY {options.SortField} {( options.SortOrder == SortOrder.Ascending ? "ASC" : "DESC" )}";
+        }
+
+        var dateFilterClause = string.Empty;
+
+        var offset = string.Empty;
+
+        if (options.Page > 0)
+        {
+            offset = $"""
+                       OFFSET @PageOffset ROWS FETCH NEXT @PageSize ROWS ONLY
+                      """;
+        }
+
+        var sql = $"""
+                    SELECT * FROM users
+                    """;
+        var profilesDictionary = new Dictionary<int, ProfileDataModel>();
+
+        return profilesDictionary;
+    }
+
+    public async Task<bool> ValidateIfExistAsync(string parameter, CancellationToken cancellationToken = default)
+    {
+        using var connection = await _dbConnectionFactory.CreateConnectionAsync(cancellationToken);
+
+        var result = await connection.QuerySingleAsync<int>(new CommandDefinition(
+            """
+                SELECT COUNT(ID) AS InstanceNo 
+                    FROM users
+                WHERE Email LIKE CONCAT('%', @Parameter, '%') 
+                OR Name LIKE CONCAT('%', @Parameter, '%') 
+                OR RoleName LIKE CONCAT('%', @Parameter, '%') 
+            """, new
+            {
+                Parameter = parameter
+            }, cancellationToken: cancellationToken));
+
+        return result > 0;
+    }
 }

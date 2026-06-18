@@ -3,12 +3,14 @@
 using FluentValidation;
 using Legacy.Authentication.Application.Common;
 using Legacy.Profile.Application.Common;
+using Legacy.Profile.Application.Common.Mapping;
 using Legacy.Profile.Application.Factory;
 using Legacy.Profile.Application.Services.Profile.Errors;
 using Legacy.Profile.Application.Services.Profile.Repository;
 using Legacy.Profile.Application.Services.Profile.Result;
 using Legacy.Profile.Application.Services.Profile.Result.Failure;
 using Legacy.Profile.Application.Services.Status.Repository;
+using Legacy.Shared.Extensions;
 using Legacy.Shared.Utility;
 
 namespace Legacy.Profile.Application.Services.Profile;
@@ -85,4 +87,19 @@ public class ProfileService : IProfileService
             : GetByIdResult.Success(_profileFactory.CreateProfileAsync(profile));
     }
 
+    public async Task<Result<GetAllResult, GeneralFailureResult>> GetAllAsync(GetAllOptions options, CancellationToken cancellationToken)
+    {
+        var profilesDictionary = await _profileRepository.GetAllAsync(options, cancellationToken);
+        
+        var profiles = profilesDictionary.Keys
+            .Select(profile => _profileFactory.CreateProfileAsync(profilesDictionary[profile]))
+            .ToList();
+
+        return !profiles.IsEmpty()
+            ? GetAllResult.Success(profiles)
+            : GetAllResult.Empty();
+    }
+
+    public Task<int> GetRecordCountAsync(GetAllOptions options, CancellationToken cancellationToken = default) => 
+        _profileRepository.GetRecordCountAsync(options, cancellationToken);
 }

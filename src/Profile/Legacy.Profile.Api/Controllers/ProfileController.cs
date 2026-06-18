@@ -1,14 +1,14 @@
 ﻿using Legacy.Profile.Api.ErrorHandling;
 using Legacy.Profile.Api.ErrorHandling.FailureResult;
 using Legacy.Profile.Api.Mapping;
-using Legacy.Profile.Application.Common;
+using Legacy.Profile.Api.Routing;
+using Legacy.Profile.Application.Services.Profile;
 using Legacy.Profile.Application.Services.Profile.Result;
 using Legacy.Profile.Contracts.Request;
 using Legacy.Profile.Contracts.Response;
 using Legacy.Shared;
 using Microsoft.AspNetCore.Mvc;
-using Legacy.Profile.Api.Routing;
-using Legacy.Shared.Utility;
+using Legacy.Profile.Application.Common;
 
 namespace Legacy.Profile.Api.Controllers;
 
@@ -41,13 +41,26 @@ public class ProfileController : SystemController
         return result.Match<IActionResult>(Updated, 
             failure => Problem(failure.Errors));
     }
-    //[HttpGet(ApiRoute.GetAll)]
-    //[ProducesResponseType(typeof(GetAllResponse), StatusCodes.Status201Created)]
-    //[ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
-    //public async Task<IActionResult> GetAll([FromQuery] GetAllRequest request, CancellationToken cancellationToken)
-    //{
-    //    var options = request.Map(); 
-    //}
+
+    [HttpGet(ApiRoute.GetAll)]
+    [ProducesResponseType(typeof(GetAllResponse), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> GetAll([FromQuery] GetAllRequest request, CancellationToken cancellationToken)
+    {
+        var options = request.Map();
+
+        if (options is null)
+            return Problem(statusCode: StatusCodes.Status400BadRequest, 
+                title: GeneralFailureResult.Throw(ErrorCode.Filter));
+
+        var result = await _profileService.GetAllAsync(options, cancellationToken);
+        var recordCount = await _profileService.GetRecordCountAsync(options, cancellationToken);
+
+        return result.Match<IActionResult>(
+            success => Ok(success.Map(request.Page, request.PageSize, recordCount)), 
+            failure => Problem(failure.Errors)
+        );
+    }
 
     [HttpGet(ApiRoute.Get)]
     [ProducesResponseType(typeof(ProfileResponse), StatusCodes.Status200OK)]
