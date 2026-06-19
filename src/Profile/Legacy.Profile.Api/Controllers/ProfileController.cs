@@ -26,25 +26,6 @@ public class ProfileController : SystemController
     [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Create(ProfileRequest request, CancellationToken cancellationToken)
     {
-        string? imageUrl = null; 
-        
-        if (request.ImageUrl is not null)
-        {
-
-            var fileName = $"{Guid.NewGuid()}{Path.GetExtension(request.ImageUrl.FileName)}";
-
-            var uploadPath = Path.Combine(
-                Directory.GetCurrentDirectory(), 
-                "wwwroot", 
-                "images", 
-                fileName);
-
-            using var stream = new FileStream(uploadPath, FileMode.Create);
-
-            await request.ImageUrl.CopyToAsync(stream, cancellationToken);
-
-            imageUrl = $"/images/{fileName}";
-        }
         var result = await _profileService.CreateAsync(request.Map(), cancellationToken);
 
         return result.Match<IActionResult>(Created, failure => Problem(failure.Errors));

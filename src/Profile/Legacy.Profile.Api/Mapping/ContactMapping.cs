@@ -56,7 +56,8 @@ public static class ContactMapping
             Email = request.Email,
             Password = request.Password, 
             Role = request.Role.Map(), 
-            CreatedAt = request.CreatedAt
+            CreatedAt = request.CreatedAt,
+            ImageUrl = request.ImageUrl
         };
 
     public static RoleModel Map(this RoleRequest request) =>
