@@ -5,7 +5,7 @@ namespace Legacy.Profile.Application.Factory;
 
 public interface IProfileFactory
 {
-    Domain.Profile CreateProfileAsync(CreateProfile createProfile);
+    Task<Domain.Profile> CreateProfileAsync(CreateProfile createProfile);
 
     Domain.Profile CreateProfileAsync(ProfileDataModel data);
 

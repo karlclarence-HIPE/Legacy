@@ -13,17 +13,17 @@ public class ProfileFactory : IProfileFactory
 {
     private readonly IDateTimeProvider _dateTimeProvider; 
     private readonly IFileManager _fileManager;
-    private readonly IOptionsMonitor<ModuleConfigurationOptions> _optionsMonitor;
+    private readonly IOptionsMonitor<ModuleConfigurationOptions> _configurations;
     
     public ProfileFactory(IDateTimeProvider dateTimeProvider, IFileManager fileManager, 
-        IOptionsMonitor<ModuleConfigurationOptions> confiigurations)
+        IOptionsMonitor<ModuleConfigurationOptions> configurations)
     {
         this._dateTimeProvider = dateTimeProvider;
         this._fileManager = fileManager;
-        this._optionsMonitor = confiigurations;
+        this._configurations = configurations;
     }
 
-    public Domain.Profile CreateProfileAsync(CreateProfile createProfile)
+    public async Task<Domain.Profile> CreateProfileAsync(CreateProfile createProfile)
     {
         var profile = Domain.Profile.Create(
                 createProfile.Name,
@@ -32,6 +32,15 @@ public class ProfileFactory : IProfileFactory
                 Role.Create(createProfile.Role.RoleId, createProfile.Role.RoleName),
                 createProfile.CreatedAt
                 );
+
+        if (createProfile.ImageUrl is null) return profile;
+
+        var fileName = await _fileManager.UploadAsync(
+            createProfile.ImageUrl,
+            _configurations.CurrentValue.UploadDirectory
+        );
+
+        profile.UploadImage(fileName);
 
         return profile;
     }
@@ -59,6 +68,15 @@ public class ProfileFactory : IProfileFactory
                 Role.Update(updateProfile.Role.RoleId, updateProfile.Role.RoleName),
                 updateProfile.CreatedAt
             );
+
+        if (updateProfile.ImageUrl is null) return profile;
+        
+        var fileName = _fileManager.UploadAsync(
+            updateProfile.ImageUrl,
+            _configurations.CurrentValue.UploadDirectory
+        );
+
+        profile.UploadImage(fileName.Result);
 
         return profile;
     }

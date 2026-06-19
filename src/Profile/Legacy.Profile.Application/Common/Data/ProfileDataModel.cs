@@ -1,4 +1,6 @@
-﻿namespace Legacy.Profile.Application.Common.Data;
+﻿using Microsoft.AspNetCore.Http;
+
+namespace Legacy.Profile.Application.Common.Data;
 
 public class ProfileDataModel
 {
@@ -9,6 +11,8 @@ public class ProfileDataModel
     public required string Email { get; init; }
 
     public required string Password { get; init; }
+
+    public IFormFile? ImageUrl { get; init; }
 
     public required RoleDataModel Role { get; init; }
 

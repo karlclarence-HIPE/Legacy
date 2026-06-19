@@ -47,7 +47,7 @@ public class ProfileService : IProfileService
                 .Select(error => ModuleError.RetrieveErrorByCode(error.ErrorMessage)).ToList());
         }
 
-        var profile = _profileFactory.CreateProfileAsync(createProfile);
+        var profile = await _profileFactory.CreateProfileAsync(createProfile);
 
         var isCreated = await _profileRepository.CreateAsync(profile, cancellationToken);
 

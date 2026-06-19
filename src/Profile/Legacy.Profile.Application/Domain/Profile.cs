@@ -48,10 +48,16 @@ public class Profile : AggregateRoot
 
     public string Password {  get; private set; }
 
+    public string ImageUrl { get; private set; } = string.Empty;
+
     public Role Role { get; private set; }
 
     public DateTime CreatedAt { get; private set; }
 
     public DateTime UpdatedAt { get; private set; }
 
+    internal void UploadImage(string imageUrl)
+    {
+        ImageUrl = imageUrl;
+    }
 }

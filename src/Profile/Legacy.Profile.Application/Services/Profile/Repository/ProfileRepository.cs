@@ -30,8 +30,8 @@ public class ProfileRepository : IProfileRepository
             var recordId = await connection.QuerySingleAsync<int>(new CommandDefinition(
                 """
                     INSERT INTO users
-                        (name, email, password_hash, role_id, created_at)
-                    VALUES (@Name, @Email, @Password, @Role_Id, CAST(@CreatedAt AS TIMESTAMP))
+                        (name, email, password_hash, role_id, created_at, image_url)
+                    VALUES (@Name, @Email, @Password, @Role_Id, CAST(@CreatedAt AS TIMESTAMP), @ImageUrl)
                     RETURNING user_id;
                 """, new
                 {
@@ -39,7 +39,8 @@ public class ProfileRepository : IProfileRepository
                     Email = entity.Email,
                     Password = entity.Password,
                     Role_Id = entity.Role.RoleId, 
-                    CreatedAt = entity.CreatedAt.ToString(Format.Date)
+                    CreatedAt = entity.CreatedAt.ToString(Format.Date),
+                    ImageUrl = entity.ImageUrl
                 }, 
                 transaction: transaction, 
                 cancellationToken: cancellationToken
