@@ -18,5 +18,5 @@ public class ProfileDataModel
 
     public required DateTime Created_at { get; init; }
 
-    public required DateTime updated_at { get; init; }  
+    public required DateTime Updated_at { get; init; }  
 }

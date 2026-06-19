@@ -47,12 +47,14 @@ public class ProfileFactory : IProfileFactory
 
     public Domain.Profile CreateProfileAsync(ProfileDataModel profileDataModel)
     {
-        var profile = Domain.Profile.Create(
+        var profile = Domain.Profile.Load(
+                profileDataModel.UserId,
                 profileDataModel.Name, 
                 profileDataModel.Email, 
                 profileDataModel.Password, 
-                Role.Create(profileDataModel.Role.RoleId, profileDataModel.Role.RoleName), 
-                profileDataModel.Created_at
+                Role.Create(1, "Admin"), 
+                profileDataModel.Created_at,
+                profileDataModel.Updated_at
             );
 
         return profile;
@@ -66,7 +68,8 @@ public class ProfileFactory : IProfileFactory
                 updateProfile.Email, 
                 updateProfile.Password, 
                 Role.Update(updateProfile.Role.RoleId, updateProfile.Role.RoleName),
-                updateProfile.CreatedAt
+                updateProfile.CreatedAt, 
+                updateProfile.UpdatedAt
             );
 
         if (updateProfile.ImageUrl is null) return profile;
@@ -89,7 +92,8 @@ public class ProfileFactory : IProfileFactory
                 profileDataModel.Email,
                 profileDataModel.Password,
                 Role.Update(profileDataModel.Role.RoleId, profileDataModel.Role.RoleName),
-                profileDataModel.Created_at
+                profileDataModel.Created_at, 
+                profileDataModel.Updated_at
             );
 
         return profile;

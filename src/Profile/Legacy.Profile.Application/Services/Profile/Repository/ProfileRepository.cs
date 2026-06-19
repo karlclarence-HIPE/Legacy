@@ -107,21 +107,45 @@ public class ProfileRepository : IProfileRepository
         using var connection = await _dbConnectionFactory.CreateConnectionAsync(cancellationToken);
 
         var sql = $"""
-                   SELECT * 
+                   SELECT  u.user_id AS UserId, 
+                           u.name AS Name, 
+                           u.email AS Email, 
+                           u.password_hash as Password, 
+                           u.image_url as ImageUrl, 
+                           r.role_id as RoleId, 
+                           r.role_name as RoleName, 
+                           DATE(u.created_at) AS Created_at, 
+                           DATE(u.updated_at) As Updated_at
                    FROM users AS u 
                         INNER JOIN roles r
-                                ON u.RoleId = r.ID
+                                ON u.role_id = r.role_id
                    WHERE (@UserId   = 0
-                        OR u.UserId = @UserId)
+                        OR u.user_id = @UserId)
                    """;
 
-        return await connection.QueryFirstOrDefaultAsync<ProfileDataModel>(
-            new CommandDefinition(
-                sql, 
-                new { UserId = userId }, 
-                cancellationToken: cancellationToken
-            )
-        );
+        var profileDirectory = new Dictionary<int, ProfileDataModel>();
+
+        //await connection.QueryAsync<ProfileDataModel, RoleDataModel>(sql, (profile, role) =>
+        //{
+        //    if (!profileDirectory.TryGetValue(role.RoleId, out var existingProfile))
+        //        profileDirectory.Add(role.RoleId, profile);
+
+        //    return profile;
+        //}, splitOn: "RoleId", param: new {
+
+        //});
+
+        await connection.QueryAsync<ProfileDataModel, RoleDataModel, ProfileDataModel>(sql, (profile, role) =>
+        {
+            if (!profileDirectory.TryGetValue(profile.UserId, out var existingProfile))
+            {
+                profileDirectory.Add(profile.UserId, profile);
+            }
+            return profile;
+
+        }, splitOn: "RoleId", param: new { UserId = userId });
+
+        return profileDirectory.SingleOrDefault().Value;
     }
 
     public async Task<ILookup<int, RoleDataModel>> RetrievalRoleAsync(IDbConnection connection, IEnumerable<int> ids, CancellationToken cancellationToken = default)

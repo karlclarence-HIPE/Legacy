@@ -18,25 +18,26 @@ public class Profile : AggregateRoot
     public static Profile Create(string name, string email, string password, Role role, DateTime createdAt) =>
         new(name, email, password, role, createdAt);
 
-    public static Profile Update(int id, string name, string email, string password, Role role, DateTime createdAt) =>
-        new(id, name, email, password, role, createdAt); 
+    public static Profile Update(int id, string name, string email, string password, Role role, DateTime createdAt, DateTime updatedAt) =>
+        new(id, name, email, password, role, createdAt, updatedAt); 
 
     #endregion
 
     #region "Load Application"
 
-    private Profile(int userId, string name, string email, string password, Role role, DateTime updatedAt)
+    private Profile(int userId, string name, string email, string password, Role role, DateTime createdAt, DateTime updatedAt)
     {
         UserId = userId;
         Name = name;
         Email = email; 
         Password = password;
         Role = role;
+        CreatedAt = createdAt;
         UpdatedAt = updatedAt;
     }
 
-    public static Profile Load(int userId, string name, string email, string password, Role role, DateTime updatedAt) =>
-        new(userId, name, email, password, role, updatedAt);
+    public static Profile Load(int userId, string name, string email, string password, Role role, DateTime createdAt, DateTime updatedAt) =>
+        new(userId, name, email, password, role, createdAt, updatedAt);
 
     #endregion
 

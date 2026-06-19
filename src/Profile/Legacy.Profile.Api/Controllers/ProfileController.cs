@@ -66,16 +66,16 @@ public class ProfileController : SystemController
     [ProducesResponseType(typeof(ProfileResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetById([FromRoute] string userId, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetById([FromRoute] string id, CancellationToken cancellationToken)
     {
-        var isValidUserId = int.TryParse(userId, out var convertedId);
+        var isValidUserId = int.TryParse(id, out var convertedId);
 
         if (!isValidUserId) 
             return Problem(statusCode: StatusCodes.Status400BadRequest, 
                 title: GeneralFailureResult.Throw(ErrorCode.Filter));
 
-        int id = Convert.ToInt32(userId);
-        var result = await _profileService.GetByIdAsync(id, cancellationToken);
+        //int id = Convert.ToInt32(id);
+        var result = await _profileService.GetByIdAsync(convertedId, cancellationToken);
 
         return result.Match<IActionResult>(
                 success => Ok(success.Map()), 
