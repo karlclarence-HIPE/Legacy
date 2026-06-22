@@ -10,6 +10,8 @@ public class BaseProfileResponse
 
     public required string Password { get; init; }
 
+    public string? ImageUrl { get; init; }
+
     public required RoleResponse Role { get; init; }
 
     public required DateTime CreateAt { get; init; }

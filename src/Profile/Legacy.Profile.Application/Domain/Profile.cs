@@ -6,26 +6,27 @@ public class Profile : AggregateRoot
 {
     #region "Create Profile"
 
-    private Profile(string name, string email, string password, Role role, DateTime createdAt)
+    private Profile(string name, string email, string password, Role role, DateTime createdAt, string? imageUrl)
     {
         Name = name;
         Email = email;
         Password = password; 
         Role = role;
         CreatedAt = createdAt;
+        ImageUrl = imageUrl;
     }
 
-    public static Profile Create(string name, string email, string password, Role role, DateTime createdAt) =>
-        new(name, email, password, role, createdAt);
+    public static Profile Create(string name, string email, string password, Role role, DateTime createdAt, string? imageUrl = null) =>
+        new(name, email, password, role, createdAt, imageUrl);
 
-    public static Profile Update(int id, string name, string email, string password, Role role, DateTime createdAt, DateTime updatedAt) =>
-        new(id, name, email, password, role, createdAt, updatedAt); 
+    public static Profile Update(int id, string name, string email, string password, Role role, DateTime createdAt, DateTime updatedAt, string? imageUrl = null) =>
+        new(id, name, email, password, role, createdAt, updatedAt, imageUrl); 
 
     #endregion
 
     #region "Load Application"
 
-    private Profile(int userId, string name, string email, string password, Role role, DateTime createdAt, DateTime updatedAt)
+    private Profile(int userId, string name, string email, string password, Role role, DateTime createdAt, DateTime updatedAt, string? imageUrl)
     {
         UserId = userId;
         Name = name;
@@ -34,10 +35,11 @@ public class Profile : AggregateRoot
         Role = role;
         CreatedAt = createdAt;
         UpdatedAt = updatedAt;
+        ImageUrl = imageUrl;
     }
 
-    public static Profile Load(int userId, string name, string email, string password, Role role, DateTime createdAt, DateTime updatedAt) =>
-        new(userId, name, email, password, role, createdAt, updatedAt);
+    public static Profile Load(int userId, string name, string email, string password, Role role, DateTime createdAt, DateTime updatedAt, string? imageUrl) =>
+        new(userId, name, email, password, role, createdAt, updatedAt, imageUrl);
 
     #endregion
 
@@ -49,7 +51,7 @@ public class Profile : AggregateRoot
 
     public string Password {  get; private set; }
 
-    public string ImageUrl { get; private set; } = string.Empty;
+    public string? ImageUrl { get; private set; } 
 
     public Role Role { get; private set; }
 

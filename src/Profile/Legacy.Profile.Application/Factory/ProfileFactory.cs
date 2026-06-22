@@ -6,6 +6,8 @@ using Legacy.Profile.Application.Domain;
 using Legacy.Shared.Provider;
 using Legacy.Shared.Utility;
 using Microsoft.Extensions.Options;
+using Legacy.Profile.Application.Services.Profile.Models;
+using System.Text.Json;
 
 namespace Legacy.Profile.Application.Factory;
 
@@ -47,6 +49,25 @@ public class ProfileFactory : IProfileFactory
 
     public Domain.Profile CreateProfileAsync(ProfileDataModel profileDataModel)
     {
+        string? extractedPath = null;
+
+       if (!string.IsNullOrEmpty(profileDataModel.ImageUrl))
+        {
+            try
+            {
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
+
+                var files = JsonSerializer.Deserialize<List<DatabaseImageMetadata>>(profileDataModel.ImageUrl, options);
+                extractedPath = files?.FirstOrDefault()?.Path;
+            } catch (JsonException ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"JSON Error: {ex.Message}");
+            }
+        }
+        
         var profile = Domain.Profile.Load(
                 profileDataModel.UserId,
                 profileDataModel.Name, 
@@ -54,7 +75,8 @@ public class ProfileFactory : IProfileFactory
                 profileDataModel.Password, 
                 Role.Create(1, "Admin"), 
                 profileDataModel.Created_at,
-                profileDataModel.Updated_at
+                profileDataModel.Updated_at,
+                extractedPath
             );
 
         return profile;

@@ -77,6 +77,12 @@ public class ProfileController : SystemController
         //int id = Convert.ToInt32(id);
         var result = await _profileService.GetByIdAsync(convertedId, cancellationToken);
 
+        if (result == null) return NotFound();
+
+        //string? relativeImagePath = null; 
+
+        //if (!string.IsNullOrEmpty(result.Image))
+
         return result.Match<IActionResult>(
                 success => Ok(success.Map()), 
                 failure => Problem(failure.Errors)

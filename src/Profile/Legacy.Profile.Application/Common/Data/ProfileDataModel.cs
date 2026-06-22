@@ -12,7 +12,7 @@ public class ProfileDataModel
 
     public required string Password { get; init; }
 
-    public IFormFile? ImageUrl { get; init; }
+    public string? ImageUrl { get; init; }
 
     public required RoleDataModel Role { get; init; }
 

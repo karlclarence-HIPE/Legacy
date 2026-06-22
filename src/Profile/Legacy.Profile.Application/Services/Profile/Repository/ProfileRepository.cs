@@ -111,11 +111,11 @@ public class ProfileRepository : IProfileRepository
                            u.name AS Name, 
                            u.email AS Email, 
                            u.password_hash as Password, 
-                           u.image_url as ImageUrl, 
+                           u.image_url AS ImageUrl, 
                            r.role_id as RoleId, 
                            r.role_name as RoleName, 
-                           DATE(u.created_at) AS Created_at, 
-                           DATE(u.updated_at) As Updated_at
+                           u.created_at AS Created_at, 
+                           u.updated_at As Updated_at
                    FROM users AS u 
                         INNER JOIN roles r
                                 ON u.role_id = r.role_id

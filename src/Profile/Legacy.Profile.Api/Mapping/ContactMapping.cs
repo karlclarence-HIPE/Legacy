@@ -76,7 +76,8 @@ public static class ContactMapping
             Password = profile.Password,
             Role = profile.Role.Map(),
             CreateAt = profile.CreatedAt,
-            UpdatedAt = profile.UpdatedAt
+            UpdatedAt = profile.UpdatedAt,
+            ImageUrl = profile.ImageUrl
         };
 
     public static RoleResponse Map(this Role role) =>
