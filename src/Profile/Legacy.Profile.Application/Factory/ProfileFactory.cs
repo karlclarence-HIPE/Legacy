@@ -51,7 +51,7 @@ public class ProfileFactory : IProfileFactory
     {
         string? extractedPath = null;
 
-       if (!string.IsNullOrEmpty(profileDataModel.ImageUrl))
+        if (!string.IsNullOrEmpty(profileDataModel.ImageUrl))
         {
             try
             {
@@ -82,7 +82,7 @@ public class ProfileFactory : IProfileFactory
         return profile;
     }
 
-    public Domain.Profile UpdateProfileAsync(UpdateProfile updateProfile)
+    public async Task<Domain.Profile> UpdateProfileAsync(UpdateProfile updateProfile)
     {
         var profile = Domain.Profile.Update(
                 updateProfile.UserId, 
@@ -95,19 +95,39 @@ public class ProfileFactory : IProfileFactory
             );
 
         if (updateProfile.ImageUrl is null) return profile;
-        
-        var fileName = _fileManager.UploadAsync(
+
+        var fileName = await _fileManager.UploadAsync(
             updateProfile.ImageUrl,
             _configurations.CurrentValue.UploadDirectory
         );
 
-        profile.UploadImage(fileName.Result);
+        profile.UploadImage(fileName);
 
         return profile;
     }
 
     public Domain.Profile UpdateProfileAsync(ProfileDataModel profileDataModel)
     {
+        string? extractedPath = null;
+
+        if (!string.IsNullOrEmpty(profileDataModel.ImageUrl))
+        {
+            try
+            {
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
+
+                var files = JsonSerializer.Deserialize<List<DatabaseImageMetadata>>(profileDataModel.ImageUrl, options);
+                extractedPath = files?.FirstOrDefault()?.Path;
+            }
+            catch (JsonException ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"JSON Error: {ex.Message}");
+            }
+        }
+
         var profile = Domain.Profile.Update(
                 profileDataModel.UserId,
                 profileDataModel.Name,
@@ -115,7 +135,8 @@ public class ProfileFactory : IProfileFactory
                 profileDataModel.Password,
                 Role.Update(profileDataModel.Role.RoleId, profileDataModel.Role.RoleName),
                 profileDataModel.Created_at, 
-                profileDataModel.Updated_at
+                profileDataModel.Updated_at, 
+                extractedPath
             );
 
         return profile;

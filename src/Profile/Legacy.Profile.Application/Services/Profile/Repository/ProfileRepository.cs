@@ -60,7 +60,7 @@ public class ProfileRepository : IProfileRepository
         }
     }
 
-    public async Task<bool> UpdateAsync(Domain.Profile entity, CancellationToken cancellationToken)
+    public async Task<bool> UpdateAsync(Domain.Profile entity, CancellationToken cancellationToken = default)
     {
         using var connection = await _dbConnectionFactory.CreateConnectionAsync(cancellationToken);
 
@@ -76,14 +76,17 @@ public class ProfileRepository : IProfileRepository
                         name = @Name, 
                         role_id = @RoleId, 
                         email = @Email, 
-                        updated_at = @UpdatedAt
+                        image_url = @ImageUrl,
+                        updated_at = CAST(@UpdatedAt AS TIMESTAMP)
                     WHERE user_id = @UserId
                 """, new 
                 {
                     Name = entity.Name, 
                     RoleId = entity.Role.RoleId,   
                     Email = entity.Email, 
-                    UpdatedAt = entity.UpdatedAt.ToString(Format.Date)
+                    ImageUrl = entity.ImageUrl,
+                    UpdatedAt = entity.UpdatedAt.ToString(Format.Date),
+                    UserId = entity.UserId
                 }, 
                 transaction: transaction, cancellationToken: cancellationToken));
 

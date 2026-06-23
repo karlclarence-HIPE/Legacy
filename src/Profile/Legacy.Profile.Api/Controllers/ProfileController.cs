@@ -109,7 +109,7 @@ public class ProfileController : SystemController
 
         return CreatedAtAction(nameof(GetById), new
         {
-            idOrGuid = response.UserId,
+            id = response.UserId,
         }, response);
     }
 }

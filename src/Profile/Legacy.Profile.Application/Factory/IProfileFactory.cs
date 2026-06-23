@@ -9,7 +9,7 @@ public interface IProfileFactory
 
     Domain.Profile CreateProfileAsync(ProfileDataModel data);
 
-    Domain.Profile UpdateProfileAsync(UpdateProfile updateProfile);
+    Task<Domain.Profile> UpdateProfileAsync(UpdateProfile updateProfile);
 
     Domain.Profile UpdateProfileAsync(ProfileDataModel data);
 }

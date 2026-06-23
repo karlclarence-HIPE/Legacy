@@ -96,7 +96,8 @@ public static class ContactMapping
             Password = request.Password, 
             Role = request.Role.Map(), 
             CreatedAt = request.CreatedAt, 
-            UpdatedAt = request.UpdatedAt
+            UpdatedAt = request.UpdatedAt, 
+            ImageUrl = request.ImageUrl
         };
 
     public static GetAllResponse Map(this GetAllResult result, int page, int pageSize, int recordCount)

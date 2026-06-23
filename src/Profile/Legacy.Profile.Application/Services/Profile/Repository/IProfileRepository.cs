@@ -8,7 +8,7 @@ public interface IProfileRepository
 {
     Task<bool> CreateAsync(Domain.Profile entity, CancellationToken cancellationToken = default);
 
-    Task<bool> UpdateAsync(Domain.Profile entity, CancellationToken cancellationToken);
+    Task<bool> UpdateAsync(Domain.Profile entity, CancellationToken cancellationToken = default);
 
     Task<IDictionary<int, ProfileDataModel>> GetAllAsync(GetAllOptions options, CancellationToken cancellationToken = default);
     

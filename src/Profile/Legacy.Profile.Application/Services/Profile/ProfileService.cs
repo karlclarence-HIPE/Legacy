@@ -68,7 +68,8 @@ public class ProfileService : IProfileService
                 .Select(error => ModuleError.RetrieveErrorByCode(error.ErrorMessage)).ToList());
         }
 
-        var profile = _profileFactory.UpdateProfileAsync(updateProfile);
+        var profile = await _profileFactory.UpdateProfileAsync(updateProfile);
+
         var isCreated = await _profileRepository.UpdateAsync(profile, cancellationToken);
 
         if (!isCreated) return UpdateProfileFailureResult.Throw(ErrorCode.UpdatingError); 
