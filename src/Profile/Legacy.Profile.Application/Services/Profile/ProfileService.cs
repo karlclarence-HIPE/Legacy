@@ -1,7 +1,6 @@
 ﻿
 
 using FluentValidation;
-using Legacy.Authentication.Application.Common;
 using Legacy.Profile.Application.Common;
 using Legacy.Profile.Application.Common.Mapping;
 using Legacy.Profile.Application.Factory;
@@ -78,9 +77,9 @@ public class ProfileService : IProfileService
 
     }
 
-    public async Task<Result<Domain.Profile, GetByIdFailureResult>> GetByIdAsync(int userId, CancellationToken cancellationToken)
+    public async Task<Result<Domain.Profile, GetByIdFailureResult>> GetByIdAsync(GetByIdUserWithOptions options, CancellationToken cancellationToken)
     {
-        var profile = await _profileRepository.GetByIdAsync(userId, cancellationToken);
+        var profile = await _profileRepository.GetByIdAsync(options, cancellationToken);
 
         return profile is null
             ? GetByIdFailureResult.Throw(ErrorCode.NotFound)

@@ -1,5 +1,5 @@
 ﻿using Legacy.Shared.Options;
 
-namespace Legacy.Authentication.Application.Common;
+namespace Legacy.Profile.Application.Common;
 
 public class GetByIdUserWithOptions : GetByIdUserOptions;

@@ -16,7 +16,7 @@ public interface IProfileService
 
     Task<Result<GetAllResult, GeneralFailureResult>> GetAllAsync(GetAllOptions options, CancellationToken cancellationToken);
 
-    Task<Result<Domain.Profile, GetByIdFailureResult>> GetByIdAsync(int userId, CancellationToken cancellationToken);
+    Task<Result<Domain.Profile, GetByIdFailureResult>> GetByIdAsync(GetByIdUserWithOptions options, CancellationToken cancellationToken);
 
     Task<int> GetRecordCountAsync(GetAllOptions options, CancellationToken cancellationToken = default);
 }

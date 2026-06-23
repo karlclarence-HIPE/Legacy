@@ -1,13 +1,12 @@
 ﻿using Dapper;
 using Legacy.Shared.Options;
-using Legacy.Authentication.Application.Common;
+using Legacy.Profile.Application.Common;
 using Legacy.Profile.Application.Common.Data;
 using Legacy.Profile.Application.Common.Mapping;
 using Legacy.Profile.Application.Database;
 using Legacy.Shared.Format;
 using System.Data;
 using GetAllOptions = Legacy.Profile.Application.Common.Mapping.GetAllOptions;
-
 namespace Legacy.Profile.Application.Services.Profile.Repository;
 
 public class ProfileRepository : IProfileRepository
@@ -102,7 +101,7 @@ public class ProfileRepository : IProfileRepository
         }
     }
 
-    public async Task<ProfileDataModel?> GetByIdAsync(int userId, CancellationToken cancellationToken = default)
+    public async Task<ProfileDataModel?> GetByIdAsync(GetByIdUserWithOptions options, CancellationToken cancellationToken = default)
     {
         using var connection = await _dbConnectionFactory.CreateConnectionAsync(cancellationToken);
 
@@ -119,8 +118,7 @@ public class ProfileRepository : IProfileRepository
                    FROM users AS u 
                         INNER JOIN roles r
                                 ON u.role_id = r.role_id
-                   WHERE (@UserId   = 0
-                        OR u.user_id = @UserId)
+                   WHERE u.user_id = @UserId
                    """;
 
         var profileDirectory = new Dictionary<int, ProfileDataModel>();
@@ -139,11 +137,15 @@ public class ProfileRepository : IProfileRepository
         {
             if (!profileDirectory.TryGetValue(profile.UserId, out var existingProfile))
             {
-                profileDirectory.Add(profile.UserId, profile);
+                existingProfile = profile;
+
+                existingProfile?.Role = role;
+
+                profileDirectory.Add(profile.UserId, existingProfile = profile);
             }
             return profile;
 
-        }, splitOn: "RoleId", param: new { UserId = userId });
+        }, splitOn: "RoleId", param: new { UserId = options.UserId });
 
         return profileDirectory.SingleOrDefault().Value;
     }

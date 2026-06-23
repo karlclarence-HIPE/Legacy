@@ -13,8 +13,8 @@ public class ProfileDataModel
     public required string Password { get; init; }
 
     public string? ImageUrl { get; init; }
-
-    public required RoleDataModel Role { get; init; }
+    
+    public required RoleDataModel Role { get; set; }
 
     public required DateTime Created_at { get; init; }
 

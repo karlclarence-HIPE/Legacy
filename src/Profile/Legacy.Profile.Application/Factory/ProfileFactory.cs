@@ -73,7 +73,7 @@ public class ProfileFactory : IProfileFactory
                 profileDataModel.Name, 
                 profileDataModel.Email, 
                 profileDataModel.Password, 
-                Role.Create(1, "Admin"), 
+                Role.Create(profileDataModel.Role.RoleId, profileDataModel.Role.RoleName), 
                 profileDataModel.Created_at,
                 profileDataModel.Updated_at,
                 extractedPath

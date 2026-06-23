@@ -1,5 +1,4 @@
-﻿using Legacy.Authentication.Application.Common;
-using Legacy.Profile.Application.Common;
+﻿using Legacy.Profile.Application.Common;
 using Legacy.Profile.Application.Common.Data;
 using Legacy.Profile.Application.Common.Mapping;
 
@@ -15,7 +14,7 @@ public interface IProfileRepository
     
     Task<int> GetRecordCountAsync(GetAllOptions options, CancellationToken cancellationToken = default);
 
-    Task<ProfileDataModel> GetByIdAsync(int userId, CancellationToken cancellationToken = default);
+    Task<ProfileDataModel> GetByIdAsync(GetByIdUserWithOptions options, CancellationToken cancellationToken = default);
 
     Task<bool> ValidateIfExistAsync(string parameter, CancellationToken cancellationToken = default);
 }

@@ -70,12 +70,16 @@ public class ProfileController : SystemController
     {
         var isValidUserId = int.TryParse(id, out var convertedId);
 
-        if (!isValidUserId) 
-            return Problem(statusCode: StatusCodes.Status400BadRequest, 
+        if (!isValidUserId)
+            return Problem(statusCode: StatusCodes.Status400BadRequest,
                 title: GeneralFailureResult.Throw(ErrorCode.Filter));
 
         //int id = Convert.ToInt32(id);
-        var result = await _profileService.GetByIdAsync(convertedId, cancellationToken);
+        var result = await _profileService.GetByIdAsync(new GetByIdUserWithOptions
+        {
+            UserId = convertedId, 
+            RoleId = 0
+        }, cancellationToken);
 
         if (result == null) return NotFound();
 
