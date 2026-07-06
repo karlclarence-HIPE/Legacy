@@ -57,7 +57,8 @@ public static class ContactMapping
             Password = request.Password, 
             Role = request.Role.Map(), 
             CreatedAt = request.CreatedAt,
-            ImageUrl = request.ImageUrl
+            ImageUrl = request.ImageUrl, 
+            PhoneNumber = request.PhoneNumber,
         };
 
     public static RoleModel Map(this RoleRequest request) =>
@@ -75,9 +76,10 @@ public static class ContactMapping
             Email = profile.Email,
             Password = profile.Password,
             Role = profile.Role.Map(),
-            CreateAt = profile.CreatedAt,
+            CreatedAt = profile.CreatedAt,
             UpdatedAt = profile.UpdatedAt,
-            ImageUrl = profile.ImageUrl
+            ImageUrl = profile.ImageUrl,
+            PhoneNumber = profile.PhoneNumber,
         };
 
     public static RoleResponse Map(this Role role) =>

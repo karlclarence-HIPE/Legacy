@@ -32,7 +32,8 @@ public class ProfileFactory : IProfileFactory
                 createProfile.Email, 
                 createProfile.Password, 
                 Role.Create(createProfile.Role.RoleId, createProfile.Role.RoleName),
-                createProfile.CreatedAt
+                createProfile.CreatedAt, 
+                createProfile.PhoneNumber
                 );
 
         if (createProfile.ImageUrl is null) return profile;
@@ -76,7 +77,8 @@ public class ProfileFactory : IProfileFactory
                 Role.Create(profileDataModel.Role.RoleId, profileDataModel.Role.RoleName), 
                 profileDataModel.Created_at,
                 profileDataModel.Updated_at,
-                extractedPath
+                extractedPath, 
+                profileDataModel.PhoneNumber
             );
 
         return profile;
@@ -91,7 +93,8 @@ public class ProfileFactory : IProfileFactory
                 updateProfile.Password, 
                 Role.Update(updateProfile.Role.RoleId, updateProfile.Role.RoleName),
                 updateProfile.CreatedAt, 
-                updateProfile.UpdatedAt
+                updateProfile.UpdatedAt, 
+                updateProfile.PhoneNumber
             );
 
         if (updateProfile.ImageUrl is null) return profile;
@@ -136,7 +139,8 @@ public class ProfileFactory : IProfileFactory
                 Role.Update(profileDataModel.Role.RoleId, profileDataModel.Role.RoleName),
                 profileDataModel.Created_at, 
                 profileDataModel.Updated_at, 
-                extractedPath
+                extractedPath, 
+                profileDataModel.PhoneNumber
             );
 
         return profile;

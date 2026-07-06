@@ -29,8 +29,8 @@ public class ProfileRepository : IProfileRepository
             var recordId = await connection.QuerySingleAsync<int>(new CommandDefinition(
                 """
                     INSERT INTO users
-                        (name, email, password_hash, role_id, created_at, image_url)
-                    VALUES (@Name, @Email, @Password, @Role_Id, CAST(@CreatedAt AS TIMESTAMP), @ImageUrl)
+                        (name, email, password_hash, role_id, created_at, image_url, role_name, phone_number)
+                    VALUES (@Name, @Email, @Password, @Role_Id, CAST(@CreatedAt AS TIMESTAMP), @ImageUrl, @Role_Name, @PhoneNumber)
                     RETURNING user_id;
                 """, new
                 {
@@ -39,7 +39,9 @@ public class ProfileRepository : IProfileRepository
                     Password = entity.Password,
                     Role_Id = entity.Role.RoleId, 
                     CreatedAt = entity.CreatedAt.ToString(Format.Date),
-                    ImageUrl = entity.ImageUrl
+                    ImageUrl = entity.ImageUrl,
+                    Role_Name = entity.Role.RoleName,
+                    PhoneNumber = entity.PhoneNumber
                 }, 
                 transaction: transaction, 
                 cancellationToken: cancellationToken
@@ -75,6 +77,7 @@ public class ProfileRepository : IProfileRepository
                     SET 
                         name = @Name, 
                         role_id = @RoleId, 
+                        role_name = @RoleName, 
                         email = @Email, 
                         image_url = @ImageUrl,
                         updated_at = CAST(@UpdatedAt AS TIMESTAMP)
@@ -83,6 +86,7 @@ public class ProfileRepository : IProfileRepository
                 {
                     Name = entity.Name, 
                     RoleId = entity.Role.RoleId,   
+                    RoleName = entity.Role.RoleName,
                     Email = entity.Email, 
                     ImageUrl = entity.ImageUrl,
                     UpdatedAt = entity.UpdatedAt.ToString(Format.Date),

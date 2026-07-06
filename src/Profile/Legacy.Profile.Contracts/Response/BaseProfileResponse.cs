@@ -10,11 +10,13 @@ public class BaseProfileResponse
 
     public required string Password { get; init; }
 
+    public string? PhoneNumber { get; init; }
+
     public string? ImageUrl { get; init; }
 
     public required RoleResponse Role { get; init; }
 
-    public required DateTime CreateAt { get; init; }
+    public required DateTime CreatedAt { get; init; }
 
     public required DateTime UpdatedAt { get; init; }
 }

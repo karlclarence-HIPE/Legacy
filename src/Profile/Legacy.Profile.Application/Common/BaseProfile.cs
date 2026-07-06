@@ -11,6 +11,8 @@ public class BaseProfile
 
     public required string Password { get; init; }
 
+    public string? PhoneNumber { get; init; }
+
     public IFormFile? ImageUrl { get; init; }
 
     public required RoleModel Role { get; init; }

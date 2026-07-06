@@ -4,6 +4,7 @@ CREATE TABLE Users (
     email VARCHAR(100) UNIQUE NOT NULL,
     password_hash TEXT NOT NULL,
     role_id INT REFERENCES Roles(role_id),
+    role_name VARCHAR(50) NOT NULL,
     image_url VARCHAR(255),
     phone_number VARCHAR(50),
     is_verified_account BOOLEAN DEFAULT FALSE,

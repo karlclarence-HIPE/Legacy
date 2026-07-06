@@ -10,6 +10,8 @@ public class BaseProfileRequest
 
     public required string Password { get; init; }
 
+    public string? PhoneNumber { get; init; }
+
     public IFormFile? ImageUrl { get; init; }
 
     public required RoleRequest Role { get; init; } 
